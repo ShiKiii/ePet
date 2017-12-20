@@ -4,10 +4,11 @@ import {ACCEPT_DOG,ACCEPT_DOGTYPE,ACCEPT_DOGTYPEDET,ACCEPT_CATEGORY} from './typ
 import axios from 'axios'
 
 export default {
-  getDogInfo({commit}){
+  getDogInfo({commit},callback){
     reqDogInfo().then(response => {
       let data = response.data
       commit(ACCEPT_DOG,{data})
+      callback&&callback();
       console.log('数据获取成功'+data.mall_uid)
     },response => {
       console.log('数据获取失败')
@@ -34,6 +35,7 @@ export default {
         console.log('error');
       })
   },
+
   reqCategory({commit}){
     let url='/api/v3/brand/list/main.html?'
     axios.get(`${url}pet_type=dog&system=wap&isWeb=1&version=303&_=1513600812850`)

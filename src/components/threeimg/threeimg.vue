@@ -1,8 +1,8 @@
 <template>
   <div class="threeimg">
-    <div class="left" style="width: 50.13%;" v-if="dogInfo.datas">
-      <a :href="dogInfo.datas[7].content_images[0][0].target.param">
-        <img :src="dogInfo.datas[7].content_images[0][0].image" style="height: 265.957px;width:98.5%">
+    <div class="left" style="width: 50.13%;" v-if="threeArr[0]">
+      <a>
+        <img :src="threeArr[0].content_images[0][0].image" style="height: 265.957px;width:98.5%">
       </a>
     </div>
     <div class="twoimg" style="width: 49.87%">
@@ -19,12 +19,32 @@
 <script>
   import {mapState} from 'vuex'
   export default {
+
+    data(){
+      return{
+        threeArr:[],
+      }
+    },
+
+
     computed : {
       ...mapState(['dogInfo'])
+
     },
+
+
 
     mounted () {
       this.$store.dispatch('getDogInfo')
+
+      setTimeout(()=>{
+        if(this.dogInfo.datas){
+          //获取用过index属性准确获取图片位置
+          this.threeArr = this.dogInfo.datas.filter(img=>img.type==='13'&&img.index==='2938')
+        }
+      },200)
+
+
     }
   }
 </script>

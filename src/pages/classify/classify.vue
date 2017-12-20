@@ -48,18 +48,12 @@
       line-height: 40px;
       float: left;
       a
-        font-weight: 700
-        font-size 13px
-    .classify
-      text-align right
-      padding-right 5%
-      a
         position relative
         margin 0 .8rem
         font-size .6rem
         font-weight 500
         color #000
-        &.active
+        &:active
           color #ed4044
           >span
             position absolute
@@ -71,6 +65,9 @@
     .brand
       text-align left
       padding-left 5%
+    .classify
+      text-align right
+      padding-right 5%
     .search
       img
         position: absolute

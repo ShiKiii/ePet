@@ -35,11 +35,11 @@ module.exports = {
           '^/api': '/'
         }
       },
-      '/api3':{
+      '/codeapi':{
         target:'http://localhost:3000',
         changeOrigin:true,
         pathRewrite:{
-          '^/api1': '/'
+          '^/codeapi': '/'
         }
       }
     },

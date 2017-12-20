@@ -2,13 +2,17 @@
   <div>
     <div class="rows">
       <div v-for="(menu,index) in menusTop" :key="index">
-        <a :href="menu.target.param"><img :src="menu.image"></a>
+        <a :href="menu.target.param">
+          <img :src="menu.image">
+        </a>
       </div>
     </div>
 
     <div class="rows">
       <div v-for="(menu,index) in menusBottom" :key="index">
-        <a :href="menu.target.param"><img :src="menu.image"></a>
+        <a :href="menu.target.param">
+          <img :src="menu.image">
+        </a>
       </div>
     </div>
   </div>
@@ -21,7 +25,8 @@
     data () {
       return {
         menusTop:[],
-        menusBottom:[]
+        menusBottom:[],
+        menusIcon:[]
       }
     },
 
@@ -29,16 +34,19 @@
       this.$store.dispatch('getDogInfo')
 
       setTimeout(()=>{
-        this.menusTop = this.dogInfo.datas[2].menus.filter((menu,index) => index<5 );
-        this.menusBottom = this.dogInfo.datas[2].menus.filter((menu,index) => index>=5 )
+        this.menusIcon = this.dogInfo.datas.filter(data=>data.type === '3' &&data.index === '3047')
+        this.menusTop = this.menusIcon[0].menus.filter((menu,index) => index<5 );
+        this.menusBottom = this.menusIcon[0].menus.filter((menu,index) => index>=5 )
       },200)
+
+
     },
 
     computed : {
       ...mapState(['dogInfo'])
     },
-
   }
+
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
