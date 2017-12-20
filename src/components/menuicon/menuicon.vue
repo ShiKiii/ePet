@@ -29,12 +29,9 @@
       this.$store.dispatch('getDogInfo')
 
       setTimeout(()=>{
-        this.menusTop = this.dogInfo.datas[3].menus.filter((menu,index) => index<5 );
-        this.menusBottom = this.dogInfo.datas[3].menus.filter((menu,index) => index>=5 )
-      },100)
-
-
-      console.log(this.menusBottom,this.menusTop)
+        this.menusTop = this.dogInfo.datas[2].menus.filter((menu,index) => index<5 );
+        this.menusBottom = this.dogInfo.datas[2].menus.filter((menu,index) => index>=5 )
+      },200)
     },
 
     computed : {

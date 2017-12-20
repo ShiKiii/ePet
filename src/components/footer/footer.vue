@@ -3,17 +3,17 @@
     <ul class="clearfix footernav_ul bgfff">
       <li class="index-a dogon">
         <!--<a href="https://wap.epet.com/main.html?pet_type=cat" class="db"></a>-->
-        <router-link to="/main" class="db"></router-link>
+        <router-link to="/main" class="first"></router-link>
       </li>
       <li class="type-a">
         <!--<a href="https://wap.epet.com/category.html?pet_type=cat" class="db"></a>-->
-        <router-link to="/classify" class="db"></router-link>
+        <router-link to="/classify/bigbox" class="two"></router-link>
       </li>
       <li class="cart-a">
-        <a href="https://wap.epet.com/cart/main.html" class="db"></a>
+        <a href="https://wap.epet.com/cart/main.html" class="three"></a>
       </li>
       <li class="myepet-a">
-        <a href="https://wap.epet.com/user/UserCenter.html" class="db"></a>
+        <router-link to="/regist" class="four"></router-link>
       </li>
     </ul>
   </div>
@@ -41,30 +41,30 @@
         width: 25%
         height: 55px
         a
+          background url(./img.png) no-repeat
+          background-size: 234px 163px;
+          display block
           margin: 0 auto;
           height: 40px;
           width: 42px;
           margin-top: 2px;
-      & li:nth-child(1)
-        a
-          background url("./img.png")no-repeat
-          background-position: -42px 0;
-          background-size: 234px 163px;
-      & li:nth-child(2)
-        a
-          background url("./img.png")no-repeat
-          background-position: -85px -41px;
-          background-size: 234px 163px;
-      & li:nth-child(3)
-        a
-          background url("./img.png")no-repeat
-          background-position: -85px -81px;
-          background-size: 234px 163px;
-      & li:nth-child(4)
-        a
-          background url("./img.png")no-repeat
-          background-position: -85px -122px;
-          background-size: 234px 163px;
+          &.first
+            background-position: -85px 0
+          &.two
+            background-position: -85px -41px;
+          &.three
+            background-position: -85px -81px;
+          &.four
+            background-position: -85px -122px;
+          &.active.first
+            background-position: -42px 0;
+          &.active.two
+            background-position: -42px -40px;
+          &.active.three
+            background-position: -42px -80px;
+          &.active.four
+            background-position: -42px -120px;
+
 
 
 

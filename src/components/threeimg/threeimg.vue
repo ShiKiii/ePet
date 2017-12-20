@@ -1,8 +1,8 @@
 <template>
   <div class="threeimg">
     <div class="left" style="width: 50.13%;" v-if="dogInfo.datas">
-      <a :href="dogInfo.datas[8].content_images[0][0].target.param">
-        <img :src="dogInfo.datas[8].content_images[0][0].image" style="height: 265.957px;width:98.5%">
+      <a :href="dogInfo.datas[7].content_images[0][0].target.param">
+        <img :src="dogInfo.datas[7].content_images[0][0].image" style="height: 265.957px;width:98.5%">
       </a>
     </div>
     <div class="twoimg" style="width: 49.87%">
@@ -34,6 +34,8 @@
     overflow hidden
     .left
       float left
+      position: relative
+      height 100%
     .twoimg
       float: left
 
