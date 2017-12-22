@@ -1,4 +1,4 @@
-import {ACCEPT_DOG,ACCEPT_DOGTYPE,ACCEPT_DOGTYPEDET,ACCEPT_CATEGORY} from './types'
+import {ACCEPT_DOG,ACCEPT_DOGTYPE,ACCEPT_DOGTYPEDET,ACCEPT_CATEGORY,ACCEPT_ALLBRAND} from './types'
 
 export default {
   [ACCEPT_DOG](state,{data}){
@@ -20,5 +20,9 @@ export default {
     //更新数据
     state.category = data
   },
+
+  [ACCEPT_ALLBRAND](state,{data}){
+    state.allBrand = data
+  }
 
 }

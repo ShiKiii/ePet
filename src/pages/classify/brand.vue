@@ -1,6 +1,6 @@
 <template>
   <div class="brandList">
-    <div>
+    <div v-if="xshow">
       <div v-for="(list,index) in category.brand" :key="index">
         <div class="littleTitle">
           <span>—— {{list.title}} ——</span>
@@ -21,50 +21,56 @@
         <div class="allButton">
           <a href="javascript:;" @click="allButton">全部</a>
         </div>
-        <div class="allBrand" v-show="isShow">
-          <div class="all-header">
-            <span class="back" @click="hideAll"></span>
-            <span class="text">全部品牌</span>
-            <span class="more" @click="hidenNav"></span>
-          </div>
+      </div>
+    </div>
+    <div class="allBrand" v-show="isShow">
+      <div class="all-header">
+        <span class="back" @click="hideAll"></span>
+        <span class="text">全部品牌</span>
+        <span class="more" @click="hidenNav"></span>
+      </div>
 
-          <transition name="fade">
-            <div class="nav" v-show="navShow">
-              <div>
-                <router-link to="/main">
-                  <span class="mainIcon"></span>
-                  <p>首页</p>
-                </router-link>
-                <router-link to="/classify">
-                  <span class="classifyIcon"></span>
-                  <p>商品分类</p>
-                </router-link>
-                <a href="">
-                  <span class="buyIcon"></span>
-                  <p>购物车</p>
-                </a>
-                <router-link to="/regist">
-                  <span class="registIcon"></span>
-                  <p>我的e宠</p>
-                </router-link>
+      <transition name="fade">
+        <div class="nav" v-show="navShow">
+          <div>
+            <router-link to="/main">
+              <span class="mainIcon"></span>
+              <p>首页</p>
+            </router-link>
+            <router-link to="/classify">
+              <span class="classifyIcon"></span>
+              <p>商品分类</p>
+            </router-link>
+            <a href="">
+              <span class="buyIcon"></span>
+              <p>购物车</p>
+            </a>
+            <router-link to="/regist">
+              <span class="registIcon"></span>
+              <p>我的e宠</p>
+            </router-link>
+          </div>
+        </div>
+      </transition>
+
+      <div class="allBrands">
+        <mt-index-list>
+          <mt-index-section v-for="(brand,index) in allBrand.brand" :index="brand.order">
+            <div v-for="(brandlist,index) in brand.list" :key="index">
+              <div class="brand-wrapper">
+                <div class="brand-img">
+                  <img :src="brandlist.logo">
+                </div>
+                <div class="brand-name">
+                  <p class="ft14">{{brandlist.name}}</p>
+                  <p class="ft12">{{brandlist.address}}</p>
+                </div>
               </div>
             </div>
-          </transition>
-
-          <div class="allBrands">
-            <mt-index-list>
-              <mt-index-section v-for="(brand,index) in brands" :key="index" index="A">
-                <mt-cell title="Aaron"></mt-cell>
-                <mt-cell title="Alden"></mt-cell>
-                <mt-cell title="Austin"></mt-cell>
-              </mt-index-section>
-            </mt-index-list>
-          </div>
-
-        </div>
-
-
+          </mt-index-section>
+        </mt-index-list>
       </div>
+
     </div>
   </div>
 </template>
@@ -78,26 +84,32 @@
       return{
         isShow: false,
         navShow: false,
+        xshow : true
       }
     },
 
     computed:{
-      ...mapState(['category'])
+      ...mapState(['category','allBrand'])
     },
+
     mounted (){
       this.$store.dispatch('reqCategory')
+      this.$store.dispatch('reqAllBrand')
     },
 
     methods: {
       allButton (){
         this.isShow = !this.isShow
+        this.xshow = false
       },
       hideAll(){
         this.isShow = !this.isShow
+        this.xshow = true
       },
       hidenNav(){
         this.navShow = !this.navShow
-      }
+      },
+
     }
 
   }
@@ -171,100 +183,137 @@
           text-align center
 
 
-      .allBrand
-        position  absolute
-        left 0
-        right 0
-        bottom 0
-        top 0
-        overflow hidden
-        background #fff
-        height 100%
-        width 100%
-        z-index 99
-        .all-header
-          height  50px
-          line-height  50px
-          position  relative
-          padding  0 10px
-          border-bottom  1px solid #f3f3f3
+    .allBrand
+      position  absolute
+      left 0
+      right 0
+      bottom 0
+      top 0
+      overflow hidden
+      background #fff
+      margin 0
+      height 100%
+      width 100%
+      z-index 99
+      .all-header
+        height  50px
+        line-height  50px
+        position  relative
+        padding  0 10px
+        border-bottom  1px solid #f3f3f3
+        text-align center
+        margin 0
+        .back
+          background: url(./img/img.png) no-repeat;
+          background-size: 234px 159px;
+          height: 18px;
+          width: 11px;
+          background-position: -201px -10px;
+          position: absolute;
+          margin-top: 15px;
+          left: 10px;
+        .text
+          width 90%
+          margin: 0 auto;
+          font-size: 18px;
+        .more
+          background url(./img/img.png) no-repeat
+          background-size 234px 163px
+          height 18px
+          width 17px
+          background-position -217px -10px
+          position absolute
+          margin-top 14px
+          margin-left 10px
           text-align center
+          right 10px
+      .nav
+        width: 100%;
+        background: #fff;
+        overflow: hidden;
+        margin 0
+        padding 0
+        font-size 14px
+        height 68px
+        div
+          padding 10px 0
           margin 0
-          .back
-            background: url(./img/img.png) no-repeat;
-            background-size: 234px 159px;
-            height: 18px;
-            width: 11px;
-            background-position: -201px -10px;
-            position: absolute;
-            margin-top: 15px;
-            left: 10px;
-          .text
-            width 90%
-            margin: 0 auto;
-            font-size: 18px;
-          .more
-            background url(./img/img.png) no-repeat
-            background-size 234px 163px
-            height 18px
-            width 17px
-            background-position -217px -10px
-            position absolute
-            margin-top 14px
-            margin-left 10px
-            text-align center
-            right 10px
+          overflow hidden
+          border-bottom: 1px solid #d7d7d7;
 
+        &.fade-enter-active,&.fade-leave-active
+          transition:height .3s linear;
 
-        .nav
-          width: 100%;
-          background: #fff;
-          overflow: hidden;
-          margin 0
-          padding 0
-          font-size 14px
-          height 68px
-          div
-            padding 10px 0
+        &.fade-enter, &.fade-leave-active
+          height: 0;
+
+        a
+          display: inline-block;
+          width: 25%;
+          text-align: center;
+          float: left;
+          color #333
+          p
             margin 0
-            overflow hidden
-            border-bottom: 1px solid #d7d7d7;
+          span
+            height: 25px;
+            width: 25px;
+            margin: 0 auto;
+            display block
+          .mainIcon
+            background: url(./img/img.png) no-repeat;
+            background-position: -172px -7px;
+            background-size: 234px 163px;
+          .classifyIcon
+            background: url(./img/img.png) no-repeat;
+            background-position: -172px -49px;
+            background-size: 234px 163px;
+          .buyIcon
+            background: url(./img/img.png) no-repeat;
+            background-position: -172px -90px;
+            background-size: 234px 163px;
+          .registIcon
+            background: url(./img/img.png) no-repeat;
+            background-position: -172px -133px;
+            background-size: 234px 163px;
 
-          &.fade-enter-active,&.fade-leave-active
-            transition:height .3s linear;
-
-          &.fade-enter, &.fade-leave-active
-            height: 0;
-
-          a
-            display: inline-block;
-            width: 25%;
-            text-align: center;
-            float: left;
+      .brand-wrapper
+        overflow hidden
+        padding: 10px;
+        border-bottom: 1px solid #f3f4f5;
+        margin-right: 20px;
+        margin-bottom 0
+        .brand-img
+          position relative
+          width: 30%;
+          max-width: 150px;
+          height: 50px;
+          border: 1px solid #f3f4f5;
+          padding-top: 50px 0 0 0;
+          margin-bottom 0
+          float: left;
+          overflow: hidden!important;
+          text-align: center;
+          img
+            max-width: 90%;
+            height: 40px;
+            margin: 5px auto;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+        .brand-name
+          float left
+          padding: 0;
+          margin: 5px 0 5px 20px;
+          p
+            margin 0
+          .ft14
+            font-size: 14px;
             color #333
-            p
-              margin 0
-            span
-              height: 25px;
-              width: 25px;
-              margin: 0 auto;
-              display block
-            .mainIcon
-              background: url(./img/img.png) no-repeat;
-              background-position: -172px -7px;
-              background-size: 234px 163px;
-            .classifyIcon
-              background: url(./img/img.png) no-repeat;
-              background-position: -172px -49px;
-              background-size: 234px 163px;
-            .buyIcon
-              background: url(./img/img.png) no-repeat;
-              background-position: -172px -90px;
-              background-size: 234px 163px;
-            .registIcon
-              background: url(./img/img.png) no-repeat;
-              background-position: -172px -133px;
-              background-size: 234px 163px;
+          .ft12
+            font-size: 12px;
+            color #999
 
 
 

@@ -38,10 +38,8 @@
             </li>
             <li>
               <span class="imgverify"></span>
-              <input type="text" placeholder="请输入图片内容" name="username" class="text">
-              <span style="display:block;position: absolute;top:5px;right:0px;">
-                <img src="./seccode.png">
-              </span>
+              <input type="text" placeholder="请输入图片内容" name="username" class="text" ref="code_input" @blur="loseBlur">
+              <div id="v_container" style="display:block;position:absolute;top:8px;right:0px;width:85px;height:30px"></div>
             </li>
             <li>
               <span class="dpasswordIcon"></span>
@@ -82,8 +80,10 @@
 
 <script>
   import Vue from  'vue'
-  import { Navbar, TabItem } from 'mint-ui';
+  import { Navbar, TabItem ,Toast } from 'mint-ui';
   import axios from 'axios'
+  import './js/gVerify.js'
+  import './js/gVerify'
 
   Vue.component(Navbar.name, Navbar);
   Vue.component(TabItem.name, TabItem);
@@ -93,29 +93,70 @@
         selected:'1',
         phone: '',
         code: '',
-        status: '未登陆'
+        status: '未登陆',
+        verifyCode:''
       }
     },
     methods: {
+
+      loseBlur(){
+        this.verifyCode = new GVerify("v_container");
+
+        this.$refs.my_button.onclick = function(){
+          var res = verifyCode.validate(this.$refs.code_input.value);
+          if(res){
+            alert("验证正确");
+          }else{
+            Toast({
+              message: '验证码错误',
+              position: 'middle',
+              duration: 2000
+            });
+          }
+        }
+      },
+
+
+
+
       sendCode() {
         const url = `/codeapi/sendcode?phone=${this.phone}`
         axios.get(url).then(response => {
           console.log('sendcode result ', response.data)
+        },response =>{
+          Toast({
+            message: '请输入正确的手机号',
+            position: 'middle',
+            duration: 3000
+          });
         })
         console.log('aaaa')
       },
 
       login() {
-        axios.post('/codeapi/login', {phone: this.phone, code: this.code}).then(response => {
+        axios.post('/codeapi/login', {phone: this.phone, code: this.code})
+          .then(response => {
           console.log('login result ', response.data)
           const result = response.data
           if (result.code == 0) {
             const user = result.data
             this.status = `登陆成功: ${user.phone}`
+            this.$router.push({ path: '/main'})
+            Toast({
+              message: '登录成功',
+              position: 'top',
+              duration: 3000
+            });
           } else {
             this.status = `登陆失败, 请输入正确的手机号和验证码`
           }
-        })
+        },response => {
+            Toast({
+              message: '登陆失败, 请输入正确的手机号和验证码',
+              position: 'middle',
+              duration: 3000
+            });
+          })
       }
     }
   }
@@ -196,6 +237,10 @@
                 background: url('./lock.png') no-repeat;
                 background-size: contain;
                 margin: 1px 0 0 -25px;
+              .imgwrap
+                #v_container
+                  width 85px
+                  height 30px
               .dpasswordIcon
                 float: left;
                 display: inline;
